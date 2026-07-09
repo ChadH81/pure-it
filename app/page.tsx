@@ -21,7 +21,7 @@ export default function Home() {
           Browse games
         </Link>
         <Link
-          href="/games"
+          href="/games/new"
           className="rounded-lg border border-[var(--fairway)] px-6 py-3 font-semibold text-[var(--fairway)] transition hover:bg-white"
         >
           Host a round
