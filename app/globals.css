@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root {
+  --fairway: #2d6a4f;
+  --fairway-dark: #1b4332;
+  --sand: #f6f1e7;
+}
+
+body {
+  background: var(--sand);
+  color: #1a1a1a;
+}
