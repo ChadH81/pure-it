@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  addGame,
-  SEED_COURSES,
+  createGame,
+  listCourseNames,
   type GameFormat,
   type Pace,
   type WalkRide,
-} from "@/lib/store";
+} from "@/lib/db";
+import { useUser } from "@/lib/useUser";
 
 const inputCls =
   "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--fairway)] focus:outline-none";
@@ -17,38 +18,73 @@ const labelCls = "mb-1 block text-sm font-semibold";
 
 export default function HostGamePage() {
   const router = useRouter();
+  const { user, loading: userLoading } = useUser();
+  const [courses, setCourses] = useState<string[]>([]);
   const [course, setCourse] = useState("");
   const [city, setCity] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [format, setFormat] = useState<GameFormat>("Casual 18");
+  const [format, setFormat] = useState<GameFormat>("casual_18");
   const [slots, setSlots] = useState(4);
   const [hcpMin, setHcpMin] = useState("");
   const [hcpMax, setHcpMax] = useState("");
   const [pace, setPace] = useState<Pace | "">("");
-  const [walkRide, setWalkRide] = useState<WalkRide>("Either");
+  const [walkRide, setWalkRide] = useState<WalkRide>("either");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  useEffect(() => {
+    if (user) listCourseNames().then(setCourses).catch(() => {});
+  }, [user]);
+
+  if (userLoading) {
+    return <main className="mx-auto max-w-xl px-4 py-10 text-gray-500">Loading…</main>;
+  }
+
+  if (!user) {
+    return (
+      <main className="mx-auto max-w-xl px-4 py-16 text-center">
+        <h1 className="text-2xl font-bold">Sign in to host a round</h1>
+        <Link
+          href="/login"
+          className="mt-6 inline-block rounded-lg bg-[var(--fairway)] px-6 py-3 font-semibold text-white"
+        >
+          Sign in
+        </Link>
+      </main>
+    );
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!course.trim() || !date || !time) {
       setError("Course, date, and time are required.");
       return;
     }
-    const id = addGame({
-      course: course.trim(),
-      city: city.trim() || "Nearby",
-      teeTime: `${date}T${time}:00`,
-      format,
-      slotsTotal: slots,
-      hcpMin: hcpMin === "" ? undefined : Number(hcpMin),
-      hcpMax: hcpMax === "" ? undefined : Number(hcpMax),
-      pace: pace === "" ? undefined : pace,
-      walkRide,
-      notes: notes.trim() || undefined,
-    });
-    router.push(`/games/${id}`);
+    setBusy(true);
+    setError("");
+    try {
+      const id = await createGame(
+        {
+          course_name: course.trim(),
+          city: city.trim() || null,
+          tee_time: new Date(`${date}T${time}:00`).toISOString(),
+          format,
+          slots_total: slots,
+          notes: notes.trim() || null,
+          hcp_min: hcpMin === "" ? null : Number(hcpMin),
+          hcp_max: hcpMax === "" ? null : Number(hcpMax),
+          pace: pace === "" ? null : pace,
+          walk_or_ride: walkRide,
+        },
+        user!.id
+      );
+      router.push(`/games/${id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setBusy(false);
+    }
   }
 
   return (
@@ -73,7 +109,7 @@ export default function HostGamePage() {
             placeholder="Start typing a course name"
           />
           <datalist id="courses">
-            {SEED_COURSES.map((c) => (
+            {courses.map((c) => (
               <option key={c} value={c} />
             ))}
           </datalist>
@@ -122,10 +158,10 @@ export default function HostGamePage() {
               value={format}
               onChange={(e) => setFormat(e.target.value as GameFormat)}
             >
-              <option>Casual 18</option>
-              <option>Casual 9</option>
-              <option>2v2 Best Ball</option>
-              <option>Scramble</option>
+              <option value="casual_18">Casual 18</option>
+              <option value="casual_9">Casual 9</option>
+              <option value="best_ball_2v2">2v2 Best Ball</option>
+              <option value="scramble">Scramble</option>
             </select>
           </div>
           <div>
@@ -185,9 +221,9 @@ export default function HostGamePage() {
                 onChange={(e) => setPace(e.target.value as Pace | "")}
               >
                 <option value="">Any</option>
-                <option>Relaxed</option>
-                <option>Steady</option>
-                <option>Fast</option>
+                <option value="relaxed">Relaxed</option>
+                <option value="steady">Steady</option>
+                <option value="fast">Fast</option>
               </select>
             </div>
             <div>
@@ -198,9 +234,9 @@ export default function HostGamePage() {
                 value={walkRide}
                 onChange={(e) => setWalkRide(e.target.value as WalkRide)}
               >
-                <option>Either</option>
-                <option>Walk</option>
-                <option>Ride</option>
+                <option value="either">Either</option>
+                <option value="walk">Walk</option>
+                <option value="ride">Ride</option>
               </select>
             </div>
           </div>
@@ -222,9 +258,10 @@ export default function HostGamePage() {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-[var(--fairway)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--fairway-dark)]"
+          disabled={busy}
+          className="w-full rounded-lg bg-[var(--fairway)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--fairway-dark)] disabled:opacity-50"
         >
-          Post round
+          {busy ? "Posting…" : "Post round"}
         </button>
       </form>
     </main>
