@@ -38,9 +38,11 @@ function LoginForm() {
     setBusy(true);
     const supabase = createClient();
 
+    const cleanEmail = email.trim().toLowerCase();
+
     if (mode === "signup") {
       const { data, error } = await supabase.auth.signUp({
-        email,
+        email: cleanEmail,
         password,
         options: { data: { full_name: name || email.split("@")[0] } },
       });
@@ -55,7 +57,7 @@ function LoginForm() {
       router.refresh();
     } else {
       const { error } = await supabase.auth.signInWithPassword({
-        email,
+        email: cleanEmail,
         password,
       });
       setBusy(false);
@@ -102,6 +104,11 @@ function LoginForm() {
             id="email"
             type="email"
             required
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            inputMode="email"
+            autoComplete="email"
             className={inputCls}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -116,6 +123,7 @@ function LoginForm() {
             type="password"
             required
             minLength={6}
+            autoComplete={mode === "signup" ? "new-password" : "current-password"}
             className={inputCls}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
