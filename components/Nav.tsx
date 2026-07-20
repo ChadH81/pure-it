@@ -35,12 +35,20 @@ export default function Nav() {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="rounded-lg bg-[var(--fairway)] px-3 py-1.5 font-semibold text-white"
-            >
-              Sign in
-            </Link>
+            <>
+              <Link
+                href="/login"
+                className="rounded-lg border border-[var(--fairway)] px-3 py-1.5 font-semibold text-[var(--fairway)] transition hover:bg-[var(--sand)]"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/login?mode=signup"
+                className="rounded-lg bg-[var(--fairway)] px-3 py-1.5 font-semibold text-white transition hover:bg-[var(--fairway-dark)]"
+              >
+                Create account
+              </Link>
+            </>
           )}
         </div>
       </nav>
