@@ -58,3 +58,48 @@ from (values
 ) as v(course_name, tee_name, rating, slope, par)
 join courses c on c.name = v.course_name
 on conflict (course_id, tee_name) do nothing;
+
+-- 4. Per-tee ratings (batch 2: remaining Cambridge/K-W courses)
+insert into course_tees (course_id, tee_name, rating, slope, par, source)
+select c.id, v.tee_name, v.rating, v.slope, v.par, 'golf_canada'
+from (values
+  -- Grand Valley Golf & Country Club (par 70)
+  ('Grand Valley Golf', 'Blue',         64.6, 103, 70),
+  ('Grand Valley Golf', 'Red',          61.9, 96,  70),
+  ('Grand Valley Golf', 'Blue (Women)', 69.6, 113, 70),
+  ('Grand Valley Golf', 'Red (Women)',  66.5, 107, 70),
+  -- Cambridge Golf Club (par 72)
+  ('Cambridge Golf Club', 'Black',                69.6, 116, 72),
+  ('Cambridge Golf Club', 'Blue',                 68.5, 114, 72),
+  ('Cambridge Golf Club', 'White',                66.5, 111, 72),
+  ('Cambridge Golf Club', 'Yellow',                64.0, 102, 72),
+  ('Cambridge Golf Club', 'Orange/Family',         58.2, 86,  72),
+  ('Cambridge Golf Club', 'Blue (Women)',          73.6, 123, 72),
+  ('Cambridge Golf Club', 'White (Women)',         71.5, 118, 72),
+  ('Cambridge Golf Club', 'Yellow (Women)',        69.2, 114, 72),
+  ('Cambridge Golf Club', 'Orange/Family (Women)', 60.6, 97,  72),
+  -- Grey Silo Golf Course (par 71)
+  ('Grey Silo Golf Course', 'Black',         70.9, 128, 71),
+  ('Grey Silo Golf Course', 'Gold',          68.8, 124, 71),
+  ('Grey Silo Golf Course', 'Silver',        66.9, 119, 71),
+  ('Grey Silo Golf Course', 'Bronze',        64.8, 107, 71),
+  ('Grey Silo Golf Course', 'Gold (Women)',  74.9, 138, 71),
+  ('Grey Silo Golf Course', 'Silver (Women)',72.4, 135, 71),
+  ('Grey Silo Golf Course', 'Bronze (Women)',69.5, 127, 71),
+  -- Doon Valley Golf Course — 54 holes total; "(A)" = main 18, "(B)" = second 18 (par 72 / par 70)
+  ('Doon Valley Golf Course', 'Black (A)',        70.5, 132, 72),
+  ('Doon Valley Golf Course', 'Blue (A)',         68.2, 113, 72),
+  ('Doon Valley Golf Course', 'White (A)',        66.2, 103, 72),
+  ('Doon Valley Golf Course', 'Red (A)',          63.4, 95,  72),
+  ('Doon Valley Golf Course', 'Blue (A, Women)',  73.9, 126, 72),
+  ('Doon Valley Golf Course', 'White (A, Women)', 71.6, 119, 72),
+  ('Doon Valley Golf Course', 'Red (A, Women)',   68.7, 111, 72),
+  ('Doon Valley Golf Course', 'Blue (B)',         66.0, 104, 70),
+  ('Doon Valley Golf Course', 'White (B)',        64.6, 102, 70),
+  ('Doon Valley Golf Course', 'Red (B)',          62.4, 96,  70),
+  ('Doon Valley Golf Course', 'Blue (B, Women)',  71.6, 125, 70),
+  ('Doon Valley Golf Course', 'White (B, Women)', 69.4, 122, 70),
+  ('Doon Valley Golf Course', 'Red (B, Women)',   67.0, 111, 70)
+) as v(course_name, tee_name, rating, slope, par)
+join courses c on c.name = v.course_name
+on conflict (course_id, tee_name) do nothing;
