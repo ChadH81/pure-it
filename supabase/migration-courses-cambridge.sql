@@ -59,7 +59,9 @@ from (values
 join courses c on c.name = v.course_name
 on conflict (course_id, tee_name) do nothing;
 
--- 4. Per-tee ratings (batch 2: remaining Cambridge/K-W courses)
+-- ===========================================================================
+-- 3b. Batch 2: remaining Cambridge/K-W courses
+-- ===========================================================================
 insert into course_tees (course_id, tee_name, rating, slope, par, source)
 select c.id, v.tee_name, v.rating, v.slope, v.par, 'golf_canada'
 from (values
