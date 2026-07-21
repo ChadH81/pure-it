@@ -25,6 +25,9 @@ export default function Nav() {
           <Link href="/games" className="hover:underline">
             Games
           </Link>
+          <Link href="/handicap" className="hover:underline">
+            Handicap
+          </Link>
           {loading ? null : user ? (
             <>
               <Link href="/profile" className="hover:underline">
