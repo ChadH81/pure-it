@@ -12,7 +12,7 @@ const N = 4;
 const emptyHoles = (): WolfHole[] =>
   Array.from({ length: HOLES }, () => ({ mode: null, result: null }));
 
-function decode(value: string, wolfIdx: number): WolfHole {
+function decode(value: string): WolfHole {
   if (value === "") return { mode: null, result: null };
   if (value === "halve") return { mode: null, result: "halve" };
   if (value === "lone-win") return { mode: "lone", result: "win" };
@@ -43,8 +43,7 @@ export default function WolfCalculator() {
     setNames((prev) => prev.map((n, j) => (j === i ? v : n)));
   }
   function setHole(i: number, v: string) {
-    const wolfIdx = wolfOnHole(i, N);
-    setHoles((prev) => prev.map((h, j) => (j === i ? decode(v, wolfIdx) : h)));
+    setHoles((prev) => prev.map((h, j) => (j === i ? decode(v) : h)));
   }
   function reset() {
     setHoles(emptyHoles());
