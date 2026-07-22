@@ -53,7 +53,7 @@ function LoginForm() {
           "Check your email for a confirmation link, then sign in."
         );
       }
-      router.push("/games");
+      router.push("/handicap");
       router.refresh();
     } else {
       const { error } = await supabase.auth.signInWithPassword({
@@ -62,7 +62,7 @@ function LoginForm() {
       });
       setBusy(false);
       if (error) return setError(error.message);
-      router.push("/games");
+      router.push("/handicap");
       router.refresh();
     }
   }
@@ -77,8 +77,8 @@ function LoginForm() {
       </h1>
       <p className="mt-1 text-sm text-gray-500">
         {mode === "signin"
-          ? "Welcome back — let's find you a game."
-          : "Takes a few seconds. You can fill in your golf profile next."}
+          ? "Welcome back — pick up right where you left off."
+          : "Takes a few seconds — then start tracking your ASAP. (The game calculators are free and need no account.)"}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">

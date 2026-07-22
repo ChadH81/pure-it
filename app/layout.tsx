@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Pure it! — Find your next golf game",
+  title: "Pure it! — Free golf game calculators & ASAP tracker",
   description:
-    "Post a round, join a round. Pure it! connects golfers with compatible playing partners at courses near them.",
+    "Free calculators for Wolf, Nassau, and Skins — settle any round in seconds. Plus ASAP, a simple way to track how you're playing. No sign-up needed.",
 };
 
 export default function RootLayout({
@@ -13,9 +14,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">
+      <body className="flex min-h-screen flex-col antialiased">
         <Nav />
-        {children}
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
     </html>
   );

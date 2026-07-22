@@ -1,35 +1,169 @@
 import Link from "next/link";
+import { NassauIcon, SkinsIcon, WolfIcon, ArrowRight } from "@/components/icons";
+
+const calculators = [
+  {
+    href: "/games/nassau",
+    name: "Nassau",
+    tag: "2 players",
+    blurb: "Front nine, back nine, and the full eighteen — three bets, one match.",
+    Icon: NassauIcon,
+    accent: "var(--fairway)",
+  },
+  {
+    href: "/games/skins",
+    name: "Skins",
+    tag: "2–6 players",
+    blurb: "A skin on every hole. Win it outright or watch it carry over.",
+    Icon: SkinsIcon,
+    accent: "var(--gold)",
+  },
+  {
+    href: "/games/wolf",
+    name: "Wolf",
+    tag: "4 players",
+    blurb: "A rotating Wolf picks a partner — or takes on all three alone.",
+    Icon: WolfIcon,
+    accent: "var(--flag)",
+  },
+];
+
+const steps = [
+  { n: "1", t: "Pick your game", d: "Nassau, Skins, or Wolf — open the calculator, no account needed." },
+  { n: "2", t: "Punch in the scores", d: "Enter as you play. The result updates live, hole by hole." },
+  { n: "3", t: "Share the settlement", d: "One tap drops who-owes-who straight into your group chat." },
+];
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-      <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[var(--fairway)]">
-        Pure it!
-      </p>
-      <h1 className="max-w-2xl text-4xl font-bold leading-tight sm:text-5xl">
-        Never hunt for a fourth again.
-      </h1>
-      <p className="mt-4 max-w-xl text-lg text-gray-600">
-        Post a round at your course, or join one nearby. Matched by handicap,
-        pace, and vibe — so every round feels like playing with old friends.
-      </p>
-      <div className="mt-8 flex gap-4">
-        <Link
-          href="/games"
-          className="rounded-lg bg-[var(--fairway)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--fairway-dark)]"
-        >
-          Browse games
-        </Link>
-        <Link
-          href="/games/new"
-          className="rounded-lg border border-[var(--fairway)] px-6 py-3 font-semibold text-[var(--fairway)] transition hover:bg-white"
-        >
-          Host a round
-        </Link>
-      </div>
-      <p className="mt-12 text-xs text-gray-400">
-        Prototype — mock data only. Not affiliated with any golf course.
-      </p>
+    <main className="mx-auto max-w-5xl px-4">
+      {/* Hero */}
+      <section className="grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-2">
+        <div>
+          <span className="chip border border-[var(--line)] bg-white/70 text-[var(--fairway)]">
+            Free · No sign-up · No ads
+          </span>
+          <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-[var(--ink)] sm:text-6xl">
+            Golf&apos;s side games,{" "}
+            <span className="text-[var(--fairway)]">settled in seconds.</span>
+          </h1>
+          <p className="mt-5 max-w-md text-lg text-[var(--muted)]">
+            Punch in the scores and Pure it! tells you exactly who owes who — for
+            Wolf, Nassau, and Skins. Then track how you&apos;re playing with ASAP.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/games" className="btn-primary px-6 py-3">
+              Open the calculators <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/handicap" className="btn-ghost px-6 py-3">
+              Track your ASAP
+            </Link>
+          </div>
+          <p className="mt-6 text-xs font-medium text-[var(--muted)]">
+            Works on any phone · Settles Nassau, Skins &amp; Wolf · Free forever
+          </p>
+        </div>
+
+        {/* Product mock — a live settlement card */}
+        <div className="relative">
+          <div className="absolute -inset-3 -z-10 rounded-[1.6rem] bg-[var(--fairway)]/10 blur-2xl" />
+          <div className="rounded-3xl bg-[var(--fairway-dark)] p-6 text-white shadow-xl sm:p-7">
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                <SkinsIcon className="h-5 w-5 text-[var(--gold)]" />
+                Skins · $2 / skin
+              </span>
+              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
+                Share result
+              </span>
+            </div>
+            <p className="mt-5 text-xs uppercase tracking-widest text-white/50">Standings</p>
+            {[
+              { name: "Dana", skins: 5, money: "+$10", lead: true },
+              { name: "You", skins: 3, money: "+$6" },
+              { name: "Priya", skins: 1, money: "+$2" },
+              { name: "Marcus", skins: 0, money: "$0" },
+            ].map((r) => (
+              <div
+                key={r.name}
+                className={`mt-2 flex items-center justify-between rounded-xl px-4 py-2.5 ${
+                  r.lead ? "bg-white/15" : "bg-white/5"
+                }`}
+              >
+                <span className="font-medium">{r.name}</span>
+                <span className="text-sm text-white/70">
+                  {r.skins} {r.skins === 1 ? "skin" : "skins"} ·{" "}
+                  <span className="font-semibold text-white">{r.money}</span>
+                </span>
+              </div>
+            ))}
+            <p className="mt-4 text-xs text-white/40">Live preview · your real card looks just like this</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Game cards */}
+      <section className="grid gap-5 sm:grid-cols-3">
+        {calculators.map(({ href, name, tag, blurb, Icon, accent }) => (
+          <Link key={href} href={href} className="card group flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-lg">
+            <div className="flex items-center justify-between">
+              <span
+                className="grid h-12 w-12 place-items-center rounded-2xl text-white"
+                style={{ background: accent }}
+              >
+                <Icon className="h-6 w-6" />
+              </span>
+              <span className="chip">{tag}</span>
+            </div>
+            <h2 className="mt-4 text-xl font-bold">{name}</h2>
+            <p className="mt-1 flex-1 text-sm text-[var(--muted)]">{blurb}</p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--fairway)]">
+              Calculate
+              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        ))}
+      </section>
+
+      {/* How it works */}
+      <section className="mt-16">
+        <p className="eyebrow">How it works</p>
+        <h2 className="mt-2 text-3xl font-bold tracking-tight">From first tee to final tab</h2>
+        <div className="mt-8 grid gap-6 sm:grid-cols-3">
+          {steps.map((s) => (
+            <div key={s.n} className="relative">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-[var(--fairway)] text-sm font-bold text-white">
+                {s.n}
+              </span>
+              <h3 className="mt-3 font-bold">{s.t}</h3>
+              <p className="mt-1 text-sm text-[var(--muted)]">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ASAP band */}
+      <section className="my-16 grid items-center gap-6 overflow-hidden rounded-3xl bg-[var(--fairway-dark)] p-8 text-white sm:grid-cols-[1.4fr_1fr] sm:p-12">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/60">Your ASAP</p>
+          <h2 className="mt-2 text-3xl font-bold text-white">One number for how you&apos;re playing</h2>
+          <p className="mt-3 max-w-md text-white/70">
+            Log your rounds and Pure it! keeps a running Average Strokes Above Par —
+            a simple, casual read on your game. Free, and yours to share.
+          </p>
+          <Link
+            href="/handicap"
+            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 font-semibold text-[var(--fairway-dark)] transition hover:bg-white/90"
+          >
+            Start tracking <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="rounded-2xl bg-white/10 p-6 text-center ring-1 ring-white/10">
+          <p className="text-xs uppercase tracking-widest text-white/60">Average Strokes Above Par</p>
+          <p className="mt-2 text-6xl font-bold">12.4</p>
+          <p className="mt-2 text-sm text-white/60">Best 8 of your last 20 rounds</p>
+        </div>
+      </section>
     </main>
   );
 }

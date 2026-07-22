@@ -1,0 +1,86 @@
+import type { SVGProps } from "react";
+
+/** Golf flag in a hole — the Pure it! mark. */
+export function Flag(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path
+        d="M7 3.5v15"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+      />
+      <path d="M7 4.2h9l-2.4 2.9L16 10H7z" fill="currentColor" />
+      <ellipse cx="12" cy="19" rx="6.5" ry="1.7" fill="currentColor" opacity="0.35" />
+    </svg>
+  );
+}
+
+/** Nassau — three escalating bets (front / back / overall). */
+export function NassauIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      aria-hidden
+      {...props}
+    >
+      <line x1="6" y1="15.5" x2="6" y2="19" />
+      <line x1="12" y1="10" x2="12" y2="19" />
+      <line x1="18" y1="5.5" x2="18" y2="19" />
+    </svg>
+  );
+}
+
+/** Skins — a coin (the per-hole pot). */
+export function SkinsIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <circle cx="12" cy="12" r="8.2" />
+      <path d="M12 7.3v9.4" />
+      <path d="M14.4 9.2c-.6-.9-4-1.2-4 .6 0 1.7 4 .9 4 2.7 0 1.9-3.6 1.6-4.3.5" />
+    </svg>
+  );
+}
+
+/** Wolf — a paw print. */
+export function WolfIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <circle cx="7.2" cy="9.4" r="1.7" />
+      <circle cx="10.7" cy="7.1" r="1.8" />
+      <circle cx="14.3" cy="7.1" r="1.8" />
+      <circle cx="17.8" cy="9.4" r="1.7" />
+      <path d="M12.5 11.4c2.4 0 4.6 1.7 4.6 3.8 0 1.9-1.7 2.6-3.3 2.6-.7 0-1 .3-1.3.3s-.6-.3-1.3-.3c-1.6 0-3.3-.7-3.3-2.6 0-2.1 2.2-3.8 4.6-3.8z" />
+    </svg>
+  );
+}
+
+export function ArrowRight(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}

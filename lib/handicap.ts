@@ -1,7 +1,11 @@
 /**
- * Handicap math following the World Handicap System's core method.
- * We label the result a "Pure it! handicap" — an estimate, not an official
- * USGA Handicap Index (those require a licensed club/GHIN membership).
+ * Pure it!'s own scoring math. It turns a golfer's recent rounds into a single
+ * "Average Strokes Above Par (ASAP)" number using standard score-differential
+ * arithmetic (a public method, not anyone's proprietary system).
+ *
+ * ASAP is an unofficial estimate for casual play. It is not affiliated with,
+ * endorsed by, or valid for competition under any golf governing body, and it
+ * is not an official handicap of any kind.
  */
 
 export type RoundInput = {
@@ -18,8 +22,8 @@ export function differential(r: { score: number; rating: number; slope: number }
 }
 
 /**
- * WHS sliding scale: how many of the lowest differentials count,
- * and any adjustment, based on how many rounds are available (3–20).
+ * Sliding scale: how many of the lowest differentials count, and any
+ * adjustment, based on how many rounds are available (3–20).
  */
 function scale(n: number): { use: number; adjustment: number } {
   if (n <= 3) return { use: 1, adjustment: -2.0 };

@@ -13,6 +13,7 @@ import {
 } from "@/lib/db";
 import { differential, handicapIndex } from "@/lib/handicap";
 import { useUser } from "@/lib/useUser";
+import ShareButton from "@/components/ShareButton";
 
 const inputCls =
   "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--fairway)] focus:outline-none";
@@ -86,9 +87,10 @@ export default function HandicapPage() {
   if (!user) {
     return (
       <main className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold">Track your handicap</h1>
+        <h1 className="text-2xl font-bold">Track your ASAP</h1>
         <p className="mt-2 text-gray-600">
-          Log your rounds and get a running handicap estimate — free.
+          Log your rounds and get your Average Strokes Above Par — a free,
+          casual estimate of how you&apos;re playing.
         </p>
         <Link
           href="/login?mode=signup"
@@ -147,15 +149,24 @@ export default function HandicapPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-3xl font-bold">Your handicap</h1>
+      <h1 className="text-3xl font-bold">Your ASAP</h1>
 
-      {/* Handicap card */}
+      {/* ASAP card */}
       <div className="mt-4 rounded-xl bg-[var(--fairway-dark)] p-6 text-white shadow-sm">
         {result.index != null ? (
           <>
-            <p className="text-sm uppercase tracking-widest text-white/70">
-              Pure it! handicap
-            </p>
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-sm uppercase tracking-widest text-white/70">
+                Average Strokes Above Par (ASAP)
+              </p>
+              <ShareButton
+                title="My ASAP"
+                text={`⛳ My ASAP (Average Strokes Above Par) is ${result.index.toFixed(
+                  1
+                )} — tracked free on Pure it!`}
+                className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition hover:bg-white/25"
+              />
+            </div>
             <p className="mt-1 text-5xl font-bold">{result.index.toFixed(1)}</p>
             <p className="mt-2 text-sm text-white/70">
               Best {result.roundsUsed} of your last {result.roundsConsidered}{" "}
@@ -166,21 +177,23 @@ export default function HandicapPage() {
         ) : (
           <>
             <p className="text-sm uppercase tracking-widest text-white/70">
-              Pure it! handicap
+              Average Strokes Above Par (ASAP)
             </p>
             <p className="mt-1 text-3xl font-bold">
               {result.roundsNeeded} more {result.roundsNeeded === 1 ? "round" : "rounds"} to go
             </p>
             <p className="mt-2 text-sm text-white/70">
               Log {result.roundsNeeded === 3 ? "your first three rounds" : "a few more rounds"} and
-              your handicap estimate appears here.
+              your ASAP appears here.
             </p>
           </>
         )}
       </div>
-      <p className="mt-2 text-xs text-gray-400">
-        An estimate using the World Handicap System method — not an official
-        USGA Handicap Index.
+      <p className="mt-3 rounded-lg border border-gray-200 bg-[var(--sand)] px-4 py-3 text-xs text-gray-600">
+        <span className="font-semibold">ASAP is an unofficial estimate for casual play.</span>{" "}
+        Pure it! is an independent app — not affiliated with, endorsed by, or
+        sponsored by the USGA, The R&amp;A, or Golf Canada. ASAP is not an
+        official handicap and is not valid for tournament or club competition.
       </p>
 
       {/* Log a round */}
