@@ -199,6 +199,102 @@ export type BalancedTeams = {
   spread: number; // max total − min total (lower = more balanced)
 };
 
+// ============================================================================
+// MATCH PLAY  —  head-to-head, holes up/down. Gross low score wins the hole.
+// ============================================================================
+
+export type MatchStatus = {
+  holesPlayed: number;
+  remaining: number;
+  diff: number; // A holes − B holes (positive = A ahead)
+  leader: "A" | "B" | "AS";
+  decided: boolean; // lead is larger than holes remaining
+};
+
+export function matchPlay(a: Score[], b: Score[], totalHoles = 18): MatchStatus {
+  let A = 0;
+  let B = 0;
+  let played = 0;
+  for (let i = 0; i < totalHoles; i++) {
+    const x = a[i];
+    const y = b[i];
+    if (x == null || y == null) continue;
+    played++;
+    if (x < y) A++;
+    else if (y < x) B++;
+  }
+  const remaining = totalHoles - played;
+  const diff = A - B;
+  return {
+    holesPlayed: played,
+    remaining,
+    diff,
+    leader: diff > 0 ? "A" : diff < 0 ? "B" : "AS",
+    decided: played > 0 && Math.abs(diff) > remaining,
+  };
+}
+
+// ============================================================================
+// VEGAS  —  2 v 2. Each team's two scores form a two-digit number (low ball is
+// the tens digit). Lower team number wins the hole; the margin is the points.
+// Birdie flip: if the opposing team makes a birdie, YOUR number flips so the
+// high ball becomes the tens digit — a big, punishing swing.
+// ============================================================================
+
+export type VegasResult = {
+  netA: number; // total points, positive = Team A collects
+  money: number; // netA × value
+  holeNet: (number | null)[]; // points to A per hole (null = incomplete)
+  teamNumbers: ({ a: number; b: number } | null)[];
+};
+
+function vegasNumber(lo: number, hi: number, flipped: boolean): number {
+  const first = flipped ? hi : lo;
+  const second = flipped ? lo : hi;
+  return Number(`${first}${second}`);
+}
+
+export function vegas(
+  a1: Score[],
+  a2: Score[],
+  b1: Score[],
+  b2: Score[],
+  pars: Score[],
+  value: number,
+  flip: boolean
+): VegasResult {
+  const holes = a1.length;
+  let netA = 0;
+  const holeNet: (number | null)[] = [];
+  const teamNumbers: ({ a: number; b: number } | null)[] = [];
+
+  for (let h = 0; h < holes; h++) {
+    const av = [a1[h], a2[h]];
+    const bv = [b1[h], b2[h]];
+    if (av.some((v) => v == null) || bv.some((v) => v == null)) {
+      holeNet.push(null);
+      teamNumbers.push(null);
+      continue;
+    }
+    const [ax, ay] = av as number[];
+    const [bx, by] = bv as number[];
+    const par = pars[h];
+    const aBirdie = flip && par != null && (ax < par || ay < par);
+    const bBirdie = flip && par != null && (bx < par || by < par);
+
+    // Your number flips when the OTHER team birdies.
+    const aNum = vegasNumber(Math.min(ax, ay), Math.max(ax, ay), bBirdie);
+    const bNum = vegasNumber(Math.min(bx, by), Math.max(bx, by), aBirdie);
+
+    const net = bNum - aNum; // positive = A's number lower = A wins points
+    netA += net;
+    holeNet.push(net);
+    teamNumbers.push({ a: aNum, b: bNum });
+  }
+
+  return { netA, money: Math.round(netA * value * 100) / 100, holeNet, teamNumbers };
+}
+
 export function balanceTeams(players: Golfer[], numTeams: number): BalancedTeams {
   const n = Math.max(2, Math.floor(numTeams));
   const teams: Golfer[][] = Array.from({ length: n }, () => []);

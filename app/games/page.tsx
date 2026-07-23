@@ -1,6 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { NassauIcon, SkinsIcon, WolfIcon, ScrambleIcon, ArrowRight } from "@/components/icons";
+import {
+  NassauIcon,
+  SkinsIcon,
+  WolfIcon,
+  ScrambleIcon,
+  MatchPlayIcon,
+  VegasIcon,
+  ArrowRight,
+} from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "Golf game calculators — Wolf, Nassau & Skins | Pure it!",
@@ -35,6 +43,24 @@ const games = [
       "A rotating Wolf each hole picks a partner — or goes it alone against the other three for bigger points.",
     Icon: WolfIcon,
     accent: "var(--flag)",
+  },
+  {
+    href: "/games/vegas",
+    name: "Vegas",
+    tag: "2v2",
+    blurb:
+      "Two teams, two-digit numbers, and a birdie flip that swings the pot. The high-stakes team gambling game.",
+    Icon: VegasIcon,
+    accent: "#d98a2b",
+  },
+  {
+    href: "/games/match-play",
+    name: "Match Play",
+    tag: "2 players",
+    blurb:
+      "Head-to-head, hole by hole. Track who's up and when the match is closed out — 2 up, all square, or 3 & 2.",
+    Icon: MatchPlayIcon,
+    accent: "#8b7cf0",
   },
   {
     href: "/games/scramble",

@@ -89,6 +89,48 @@ export function ScrambleIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Match Play — a head-to-head split. */
+export function MatchPlayIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      aria-hidden
+      {...props}
+    >
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 3.5v17" />
+      <path d="M8.5 8.5 6 12l2.5 3.5" />
+      <path d="M15.5 8.5 18 12l-2.5 3.5" />
+    </svg>
+  );
+}
+
+/** Vegas — a die. */
+export function VegasIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <rect
+        x="3.5"
+        y="3.5"
+        width="17"
+        height="17"
+        rx="4"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+      <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="8.5" cy="15.5" r="1.5" fill="currentColor" />
+      <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function ArrowRight(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

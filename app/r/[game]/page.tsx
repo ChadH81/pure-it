@@ -6,7 +6,7 @@ import { ArrowRight } from "@/components/icons";
 type Params = { game: string };
 type Search = { d?: string };
 
-const CALC_SLUGS = new Set(["nassau", "skins", "wolf", "scramble"]);
+const CALC_SLUGS = new Set(["nassau", "skins", "wolf", "scramble", "vegas", "match-play"]);
 
 function ogUrl(d?: string) {
   return d ? `/og?d=${encodeURIComponent(d)}` : "/og";
