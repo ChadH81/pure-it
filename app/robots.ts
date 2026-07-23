@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       // Result permalinks and the OG image endpoint are per-share, not content.
-      disallow: ["/r/", "/og"],
+      disallow: ["/r/", "/og", "/live/"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

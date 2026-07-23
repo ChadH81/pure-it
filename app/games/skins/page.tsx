@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { skins, type Score } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
 import GroupBar from "@/components/GroupBar";
+import { createLive } from "@/lib/live";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -26,6 +28,27 @@ export default function SkinsCalculator() {
   ]);
   const [value, setValue] = useState("2");
   const [carryover, setCarryover] = useState(true);
+  const [goingLive, setGoingLive] = useState(false);
+  const [liveError, setLiveError] = useState("");
+  const router = useRouter();
+
+  async function goLive() {
+    setLiveError("");
+    setGoingLive(true);
+    try {
+      const { code, hostToken } = await createLive({
+        game: "skins",
+        names: players.map((p) => p.name),
+        scores: players.map((p) => p.scores),
+        value: Number(value) || 0,
+        carryover,
+      });
+      router.push(`/live/${code}?h=${hostToken}`);
+    } catch {
+      setLiveError("Couldn't start a live game. Please try again.");
+      setGoingLive(false);
+    }
+  }
 
   const result = useMemo(
     () => skins(players.map((p) => p.scores), Number(value) || 0, carryover),
@@ -113,7 +136,11 @@ export default function SkinsCalculator() {
           />
           Carry ties over to the next hole
         </label>
-        <div className="ml-auto flex gap-2 pb-1">
+        <div className="ml-auto flex items-center gap-2 pb-1">
+          <button onClick={goLive} disabled={goingLive} className="btn-primary px-3 py-1.5 text-sm">
+            <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-current align-middle" />
+            {goingLive ? "Starting…" : "Go live"}
+          </button>
           <button
             onClick={addPlayer}
             disabled={players.length >= 6}
@@ -126,6 +153,7 @@ export default function SkinsCalculator() {
           </button>
         </div>
       </div>
+      {liveError && <p className="mt-2 text-sm font-semibold text-red-400">{liveError}</p>}
 
       <GroupBar
         current={players.map((p) => p.name)}
