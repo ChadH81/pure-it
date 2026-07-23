@@ -156,7 +156,7 @@ export default function Home() {
           <p className="text-xs font-semibold uppercase tracking-widest text-white/60">Your ASAP</p>
           <h2 className="mt-2 text-3xl font-bold text-white">One number for how you&apos;re playing</h2>
           <p className="mt-3 max-w-md text-white/70">
-            Log your rounds and Pure it! keeps a running Average Strokes Above Par —
+            Log your rounds and Pure it! keeps a running Adjusted Strokes Against Par —
             a simple, casual read on your game. Free, and yours to share.
           </p>
           <Link
@@ -167,7 +167,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="rounded-2xl bg-white/10 p-6 text-center ring-1 ring-white/10">
-          <p className="text-xs uppercase tracking-widest text-white/60">Average Strokes Above Par</p>
+          <p className="text-xs uppercase tracking-widest text-white/60">Adjusted Strokes Against Par</p>
           <p className="mt-2 text-6xl font-bold">12.4</p>
           <p className="mt-2 text-sm text-white/60">Best 8 of your last 20 rounds</p>
         </div>

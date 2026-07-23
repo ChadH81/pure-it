@@ -1,6 +1,6 @@
 /**
  * Pure it!'s own scoring math. It turns a golfer's recent rounds into a single
- * "Average Strokes Above Par (ASAP)" number using standard score-differential
+ * "Adjusted Strokes Against Par (ASAP)" number using standard score-differential
  * arithmetic (a public method, not anyone's proprietary system).
  *
  * ASAP is an unofficial estimate for casual play. It is not affiliated with,

@@ -89,7 +89,7 @@ export default function HandicapPage() {
       <main className="mx-auto max-w-2xl px-4 py-16 text-center">
         <h1 className="text-2xl font-bold">Track your ASAP</h1>
         <p className="mt-2 text-[var(--muted)]">
-          Log your rounds and get your Average Strokes Above Par — a free,
+          Log your rounds and get your Adjusted Strokes Against Par — a free,
           casual estimate of how you&apos;re playing.
         </p>
         <Link
@@ -157,17 +157,17 @@ export default function HandicapPage() {
           <>
             <div className="flex items-start justify-between gap-3">
               <p className="text-sm uppercase tracking-widest text-white/70">
-                Average Strokes Above Par (ASAP)
+                Adjusted Strokes Against Par (ASAP)
               </p>
               <ShareButton
                 title="My ASAP"
-                text={`⛳ My ASAP (Average Strokes Above Par) is ${result.index.toFixed(
+                text={`⛳ My ASAP (Adjusted Strokes Against Par) is ${result.index.toFixed(
                   1
                 )} — tracked free on Pure it!`}
                 url={shareUrl("asap", {
                   game: "ASAP",
                   headline: `My ASAP is ${result.index.toFixed(1)}`,
-                  sub: "Average Strokes Above Par",
+                  sub: "Adjusted Strokes Against Par",
                   rows: [
                     { label: "ASAP", value: result.index.toFixed(1), lead: true },
                     {
@@ -189,7 +189,7 @@ export default function HandicapPage() {
         ) : (
           <>
             <p className="text-sm uppercase tracking-widest text-white/70">
-              Average Strokes Above Par (ASAP)
+              Adjusted Strokes Against Par (ASAP)
             </p>
             <p className="mt-1 text-3xl font-bold">
               {result.roundsNeeded} more {result.roundsNeeded === 1 ? "round" : "rounds"} to go

@@ -89,8 +89,8 @@ export default function GamesHub() {
         <div>
           <h3 className="font-bold">Want to track how you&apos;re playing?</h3>
           <p className="text-sm text-[var(--muted)]">
-            ASAP turns your rounds into one simple number — your Average Strokes
-            Above Par.
+            ASAP turns your rounds into one simple number — your Adjusted
+            Strokes Against Par.
           </p>
         </div>
         <Link href="/handicap" className="btn-ghost whitespace-nowrap px-4 py-2 text-sm">
