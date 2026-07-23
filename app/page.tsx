@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NassauIcon, SkinsIcon, WolfIcon, ArrowRight } from "@/components/icons";
+import { NassauIcon, SkinsIcon, WolfIcon, ScrambleIcon, ArrowRight } from "@/components/icons";
 
 const calculators = [
   {
@@ -25,6 +25,14 @@ const calculators = [
     blurb: "A rotating Wolf picks a partner — or takes on all three alone.",
     Icon: WolfIcon,
     accent: "var(--flag)",
+  },
+  {
+    href: "/games/scramble",
+    name: "Scramble",
+    tag: "4–24 players",
+    blurb: "Enter handicaps, get perfectly balanced teams in one tap.",
+    Icon: ScrambleIcon,
+    accent: "#5b8bd0",
   },
 ];
 
@@ -103,7 +111,7 @@ export default function Home() {
       </section>
 
       {/* Game cards */}
-      <section className="grid gap-5 sm:grid-cols-3">
+      <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {calculators.map(({ href, name, tag, blurb, Icon, accent }) => (
           <Link key={href} href={href} className="card group flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">

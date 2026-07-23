@@ -182,3 +182,39 @@ export function wolf(holes: WolfHole[], value: number, nPlayers = 4): WolfResult
 export function wolfOnHole(hole: number, nPlayers = 4): number {
   return hole % nPlayers;
 }
+
+// ============================================================================
+// SCRAMBLE TEAM BALANCER
+// Splits players into the fairest possible teams using a snake draft by
+// handicap (lowest = strongest). Team 1 picks first in round one, last in
+// round two, and so on — which keeps total handicap close across teams.
+// ============================================================================
+
+export type Golfer = { name: string; handicap: number };
+
+export type BalancedTeams = {
+  teams: Golfer[][];
+  totals: number[]; // summed handicap per team
+  averages: number[]; // mean handicap per team
+  spread: number; // max total − min total (lower = more balanced)
+};
+
+export function balanceTeams(players: Golfer[], numTeams: number): BalancedTeams {
+  const n = Math.max(2, Math.floor(numTeams));
+  const teams: Golfer[][] = Array.from({ length: n }, () => []);
+  const sorted = [...players].sort((a, b) => a.handicap - b.handicap);
+
+  sorted.forEach((p, i) => {
+    const round = Math.floor(i / n);
+    const pos = i % n;
+    const teamIdx = round % 2 === 0 ? pos : n - 1 - pos; // snake
+    teams[teamIdx].push(p);
+  });
+
+  const totals = teams.map((t) => t.reduce((s, p) => s + p.handicap, 0));
+  const averages = teams.map((t, i) => (t.length ? totals[i] / t.length : 0));
+  const nonEmpty = totals.filter((_, i) => teams[i].length > 0);
+  const spread = nonEmpty.length ? Math.max(...nonEmpty) - Math.min(...nonEmpty) : 0;
+
+  return { teams, totals, averages, spread };
+}

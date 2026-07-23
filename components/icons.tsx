@@ -68,6 +68,27 @@ export function WolfIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Scramble — a team of players. */
+export function ScrambleIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <circle cx="8.5" cy="8" r="3" />
+      <path d="M3 19a5.5 5.5 0 0 1 11 0" />
+      <path d="M16 5.6a3 3 0 0 1 0 5.8" />
+      <path d="M18 19a5.5 5.5 0 0 0-2.6-4.7" />
+    </svg>
+  );
+}
+
 export function ArrowRight(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
