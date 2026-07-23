@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { nassau, type Score, type NassauSegment } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
+import { shareUrl } from "@/lib/share";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -46,10 +47,22 @@ export default function NassauCalculator() {
 
   const segTxt = (t: string, s: NassauSegment) =>
     s.winner === "push" ? `${t}: halved` : `${t}: ${names[s.winner]} +${s.margin}`;
+  const segVal = (s: NassauSegment) =>
+    s.winner === "push" ? "Halved" : `${names[s.winner]} +${s.margin}`;
   const shareText = `⛳ Nassau — ${settle}\n${segTxt("Front", result.front)} · ${segTxt(
     "Back",
     result.back
   )} · ${segTxt("Overall", result.overall)}`;
+  const sharePath = shareUrl("nassau", {
+    game: "Nassau",
+    headline: settle,
+    sub: `$${Number(bet) || 0} / segment`,
+    rows: [
+      { label: "Front 9", value: segVal(result.front) },
+      { label: "Back 9", value: segVal(result.back) },
+      { label: "Overall 18", value: segVal(result.overall), lead: true },
+    ],
+  });
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
@@ -89,6 +102,7 @@ export default function NassauCalculator() {
             <ShareButton
               title="Nassau result"
               text={shareText}
+              url={sharePath}
               className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition hover:bg-white/25"
             />
           )}

@@ -14,6 +14,7 @@ import {
 import { differential, handicapIndex } from "@/lib/handicap";
 import { useUser } from "@/lib/useUser";
 import ShareButton from "@/components/ShareButton";
+import { shareUrl } from "@/lib/share";
 
 const inputCls = "field";
 const labelCls = "mb-1 block text-sm font-semibold";
@@ -163,6 +164,18 @@ export default function HandicapPage() {
                 text={`⛳ My ASAP (Average Strokes Above Par) is ${result.index.toFixed(
                   1
                 )} — tracked free on Pure it!`}
+                url={shareUrl("asap", {
+                  game: "ASAP",
+                  headline: `My ASAP is ${result.index.toFixed(1)}`,
+                  sub: "Average Strokes Above Par",
+                  rows: [
+                    { label: "ASAP", value: result.index.toFixed(1), lead: true },
+                    {
+                      label: "Rounds used",
+                      value: `best ${result.roundsUsed} of ${result.roundsConsidered}`,
+                    },
+                  ],
+                })}
                 className="shrink-0 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition hover:bg-white/25"
               />
             </div>

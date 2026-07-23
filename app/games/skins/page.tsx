@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { skins, type Score } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
+import { shareUrl } from "@/lib/share";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -66,6 +67,19 @@ export default function SkinsCalculator() {
       .filter((r) => r.skins > 0)
       .map((r) => `${r.name}: ${r.skins} ${r.skins === 1 ? "skin" : "skins"} ($${r.money.toFixed(2)})`)
       .join("\n");
+  const sharePath = shareUrl("skins", {
+    game: "Skins",
+    headline:
+      leader.skins > 0
+        ? `${leader.name} leads with ${leader.skins} ${leader.skins === 1 ? "skin" : "skins"}`
+        : "Skins",
+    sub: Number(value) ? `$${Number(value)} / skin` : undefined,
+    rows: ranked.slice(0, 5).map((r, i) => ({
+      label: r.name,
+      value: `${r.skins} ${r.skins === 1 ? "skin" : "skins"} · $${r.money.toFixed(2)}`,
+      lead: i === 0,
+    })),
+  });
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
@@ -120,6 +134,7 @@ export default function SkinsCalculator() {
             <ShareButton
               title="Skins result"
               text={shareText}
+              url={sharePath}
               className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition hover:bg-white/25"
             />
           )}

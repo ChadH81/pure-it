@@ -5,6 +5,7 @@ import Link from "next/link";
 import { wolf, wolfOnHole, type WolfHole } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { WolfIcon } from "@/components/icons";
+import { shareUrl } from "@/lib/share";
 
 const HOLES = 18;
 const N = 4;
@@ -61,6 +62,16 @@ export default function WolfCalculator() {
         (r) => `${r.name}: ${r.points} pts (${r.money < 0 ? "-" : "+"}$${Math.abs(r.money).toFixed(2)})`
       )
       .join("\n");
+  const sharePath = shareUrl("wolf", {
+    game: "Wolf",
+    headline: `${leader.name} leads with ${leader.points} pts`,
+    sub: Number(value) ? `$${Number(value)} / point` : undefined,
+    rows: ranked.slice(0, 4).map((r, i) => ({
+      label: r.name,
+      value: `${r.points} pts · ${r.money < 0 ? "-" : "+"}$${Math.abs(r.money).toFixed(2)}`,
+      lead: i === 0,
+    })),
+  });
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
@@ -111,6 +122,7 @@ export default function WolfCalculator() {
             <ShareButton
               title="Wolf result"
               text={shareText}
+              url={sharePath}
               className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition hover:bg-white/25"
             />
           )}

@@ -3,7 +3,12 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Pure it! — Free golf game calculators & ASAP tracker",
   description:
     "Free calculators for Wolf, Nassau, and Skins — settle any round in seconds. Plus ASAP, a simple way to track how you're playing. No sign-up needed.",
