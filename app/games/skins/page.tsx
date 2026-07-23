@@ -113,7 +113,7 @@ export default function SkinsCalculator() {
       </div>
 
       {/* Result */}
-      <div className="mt-6 rounded-2xl bg-[var(--fairway-dark)] p-6 text-white shadow-sm">
+      <div className="result-card mt-6 p-6">
         <div className="flex items-start justify-between gap-3">
           <p className="text-xs uppercase tracking-widest text-white/60">Standings</p>
           {anyScores && leader.skins > 0 && (
@@ -201,7 +201,7 @@ export default function SkinsCalculator() {
                         onChange={(e) => setCell(pi, hi, e.target.value)}
                         className={`h-9 w-9 rounded-md border text-center focus:outline-none ${
                           won
-                            ? "border-[var(--fairway)] bg-[var(--fairway)]/10 font-semibold text-[var(--fairway-dark)]"
+                            ? "border-[var(--fairway-light)] bg-[var(--fairway-light)]/15 font-semibold text-[var(--fairway-light)]"
                             : "border-[var(--line)] focus:border-[var(--fairway-light)]"
                         }`}
                       />

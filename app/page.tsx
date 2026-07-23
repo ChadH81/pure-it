@@ -40,12 +40,12 @@ export default function Home() {
       {/* Hero */}
       <section className="grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-2">
         <div>
-          <span className="chip border border-[var(--line)] bg-white/70 text-[var(--fairway)]">
+          <span className="chip text-[var(--fairway-light)]">
             Free · No sign-up · No ads
           </span>
-          <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-[var(--ink)] sm:text-6xl">
+          <h1 className="shine-text mt-5 text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
             Golf&apos;s side games,{" "}
-            <span className="text-[var(--fairway)]">settled in seconds.</span>
+            <span className="shine-gold">settled in seconds.</span>
           </h1>
           <p className="mt-5 max-w-md text-lg text-[var(--muted)]">
             Punch in the scores and Pure it! tells you exactly who owes who — for
@@ -66,8 +66,8 @@ export default function Home() {
 
         {/* Product mock — a live settlement card */}
         <div className="relative">
-          <div className="absolute -inset-3 -z-10 rounded-[1.6rem] bg-[var(--fairway)]/10 blur-2xl" />
-          <div className="rounded-3xl bg-[var(--fairway-dark)] p-6 text-white shadow-xl sm:p-7">
+          <div className="absolute -inset-4 -z-10 rounded-[1.8rem] bg-[var(--fairway-light)]/20 blur-3xl" />
+          <div className="result-card rounded-3xl p-6 shadow-xl sm:p-7">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 text-sm font-semibold">
                 <SkinsIcon className="h-5 w-5 text-[var(--gold)]" />
@@ -143,7 +143,7 @@ export default function Home() {
       </section>
 
       {/* ASAP band */}
-      <section className="my-16 grid items-center gap-6 overflow-hidden rounded-3xl bg-[var(--fairway-dark)] p-8 text-white sm:grid-cols-[1.4fr_1fr] sm:p-12">
+      <section className="result-card my-16 grid items-center gap-6 rounded-3xl p-8 sm:grid-cols-[1.4fr_1fr] sm:p-12">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-white/60">Your ASAP</p>
           <h2 className="mt-2 text-3xl font-bold text-white">One number for how you&apos;re playing</h2>

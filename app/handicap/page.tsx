@@ -15,8 +15,7 @@ import { differential, handicapIndex } from "@/lib/handicap";
 import { useUser } from "@/lib/useUser";
 import ShareButton from "@/components/ShareButton";
 
-const inputCls =
-  "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--fairway)] focus:outline-none";
+const inputCls = "field";
 const labelCls = "mb-1 block text-sm font-semibold";
 
 function today(): string {
@@ -81,14 +80,14 @@ export default function HandicapPage() {
   }, [teeName, teesForCourse]);
 
   if (userLoading || loading) {
-    return <main className="mx-auto max-w-2xl px-4 py-10 text-gray-500">Loading…</main>;
+    return <main className="mx-auto max-w-2xl px-4 py-10 text-[var(--muted)]">Loading…</main>;
   }
 
   if (!user) {
     return (
       <main className="mx-auto max-w-2xl px-4 py-16 text-center">
         <h1 className="text-2xl font-bold">Track your ASAP</h1>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-[var(--muted)]">
           Log your rounds and get your Average Strokes Above Par — a free,
           casual estimate of how you&apos;re playing.
         </p>
@@ -152,7 +151,7 @@ export default function HandicapPage() {
       <h1 className="text-3xl font-bold">Your ASAP</h1>
 
       {/* ASAP card */}
-      <div className="mt-4 rounded-xl bg-[var(--fairway-dark)] p-6 text-white shadow-sm">
+      <div className="result-card mt-4 p-6">
         {result.index != null ? (
           <>
             <div className="flex items-start justify-between gap-3">
@@ -189,7 +188,7 @@ export default function HandicapPage() {
           </>
         )}
       </div>
-      <p className="mt-3 rounded-lg border border-gray-200 bg-[var(--sand)] px-4 py-3 text-xs text-gray-600">
+      <p className="mt-3 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-xs text-[var(--muted)]">
         <span className="font-semibold">ASAP is an unofficial estimate for casual play.</span>{" "}
         Pure it! is an independent app — not affiliated with, endorsed by, or
         sponsored by the USGA, The R&amp;A, or Golf Canada. ASAP is not an
@@ -197,8 +196,8 @@ export default function HandicapPage() {
       </p>
 
       {/* Log a round */}
-      <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+      <section className="card mt-8 p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
           Log a round (18 holes)
         </h2>
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
@@ -267,7 +266,7 @@ export default function HandicapPage() {
             </div>
           </div>
           {teesForCourse.length === 0 && course.trim() !== "" && (
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[var(--muted)]">
               New course for us — rating and slope are printed on the scorecard,
               usually next to each tee. You only do this once; we&apos;ll remember it
               for everyone.
@@ -299,7 +298,7 @@ export default function HandicapPage() {
             </div>
           </div>
 
-          {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
+          {error && <p className="text-sm font-semibold text-red-400">{error}</p>}
 
           <button
             type="submit"
@@ -314,31 +313,31 @@ export default function HandicapPage() {
       {/* Round history */}
       {rounds.length > 0 && (
         <section className="mt-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
             Round history
           </h2>
           <ul className="mt-3 space-y-2">
             {rounds.map((r) => (
               <li
                 key={r.id}
-                className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm"
+                className="card flex items-center justify-between px-4 py-3 text-sm"
               >
                 <div>
                   <p className="font-semibold">
-                    {r.score} <span className="font-normal text-gray-500">at</span>{" "}
+                    {r.score} <span className="font-normal text-[var(--muted)]">at</span>{" "}
                     {r.course_name}
                     {r.tee_name && (
-                      <span className="text-gray-500"> ({r.tee_name})</span>
+                      <span className="text-[var(--muted)]"> ({r.tee_name})</span>
                     )}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-[var(--muted)]">
                     {r.date_played} · {r.rating}/{r.slope} · differential{" "}
                     {differential(r).toFixed(1)}
                   </p>
                 </div>
                 <button
                   onClick={() => handleDelete(r.id)}
-                  className="text-xs text-gray-400 hover:text-red-600"
+                  className="text-xs text-[var(--muted)] hover:text-red-400"
                   aria-label={`Delete round at ${r.course_name}`}
                 >
                   Delete

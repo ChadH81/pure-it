@@ -28,7 +28,7 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--line)] bg-[var(--sand)]/80 backdrop-blur">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 font-bold text-[var(--fairway-dark)]">
+        <Link href="/" className="flex items-center gap-2 font-bold text-[var(--ink)]">
           <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--fairway)] text-white">
             <Flag className="h-4 w-4" />
           </span>
@@ -43,7 +43,7 @@ export default function Nav() {
               className={`rounded-full px-3 py-1.5 font-medium transition ${
                 isActive(l.href)
                   ? "bg-[var(--fairway)] text-white"
-                  : "text-[var(--muted)] hover:bg-white hover:text-[var(--ink)]"
+                  : "text-[var(--muted)] hover:bg-white/10 hover:text-[var(--ink)]"
               }`}
             >
               {l.label}
@@ -56,13 +56,13 @@ export default function Nav() {
             <>
               <Link
                 href="/profile"
-                className="rounded-full px-3 py-1.5 font-medium text-[var(--muted)] transition hover:bg-white hover:text-[var(--ink)]"
+                className="rounded-full px-3 py-1.5 font-medium text-[var(--muted)] transition hover:bg-white/10 hover:text-[var(--ink)]"
               >
                 {profile?.display_name ?? "Profile"}
               </Link>
               <button
                 onClick={signOut}
-                className="rounded-full px-3 py-1.5 text-[var(--muted)] transition hover:bg-white hover:text-[var(--ink)]"
+                className="rounded-full px-3 py-1.5 text-[var(--muted)] transition hover:bg-white/10 hover:text-[var(--ink)]"
               >
                 Sign out
               </button>

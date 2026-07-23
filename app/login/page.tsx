@@ -5,13 +5,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-const inputCls =
-  "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--fairway)] focus:outline-none";
+const inputCls = "field";
 
 export default function LoginPage() {
   return (
     <Suspense
-      fallback={<main className="mx-auto max-w-sm px-4 py-16 text-gray-500">Loading…</main>}
+      fallback={<main className="mx-auto max-w-sm px-4 py-16 text-[var(--muted)]">Loading…</main>}
     >
       <LoginForm />
     </Suspense>
@@ -75,7 +74,7 @@ function LoginForm() {
       <h1 className="mt-2 text-3xl font-bold">
         {mode === "signin" ? "Sign in" : "Create your account"}
       </h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <p className="mt-1 text-sm text-[var(--muted)]">
         {mode === "signin"
           ? "Welcome back — pick up right where you left off."
           : "Takes a few seconds — then start tracking your ASAP. (The game calculators are free and need no account.)"}
@@ -130,7 +129,7 @@ function LoginForm() {
           />
         </div>
 
-        {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
+        {error && <p className="text-sm font-semibold text-red-400">{error}</p>}
         {notice && (
           <p className="text-sm font-semibold text-[var(--fairway)]">{notice}</p>
         )}
@@ -144,7 +143,7 @@ function LoginForm() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
+      <p className="mt-6 text-center text-sm text-[var(--muted)]">
         {mode === "signin" ? "New here? " : "Already have an account? "}
         <button
           onClick={() => {

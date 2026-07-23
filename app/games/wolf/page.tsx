@@ -104,7 +104,7 @@ export default function WolfCalculator() {
       </div>
 
       {/* Result */}
-      <div className="mt-6 rounded-2xl bg-[var(--fairway-dark)] p-6 text-white shadow-sm">
+      <div className="result-card mt-6 p-6">
         <div className="flex items-start justify-between gap-3">
           <p className="text-xs uppercase tracking-widest text-white/60">Standings</p>
           {anyPlayed && (

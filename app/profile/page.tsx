@@ -103,7 +103,7 @@ export default function ProfilePage() {
           />
         </div>
 
-        {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
+        {error && <p className="text-sm font-semibold text-red-400">{error}</p>}
         {saved && <p className="text-sm font-semibold text-[var(--fairway)]">Saved.</p>}
 
         <button type="submit" disabled={busy} className="btn-primary w-full px-6 py-3">
