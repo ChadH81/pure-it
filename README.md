@@ -1,49 +1,49 @@
 # Pure it!
 
-Find your next golf game. Post a round at a course near you, or join one —
-matched by handicap, pace, and playing preferences.
+**Free golf side-game calculators + a casual scoring tracker.** Settle Nassau,
+Skins, Wolf, Vegas, Match Play, and balance Scramble teams in seconds — no
+sign-up, no ads. Track how you're playing with ASAP, and share results or run a
+live scoreboard your whole group can watch.
 
-**Status:** early prototype (mock data, no backend yet).
+**Status:** live on Vercel. Six calculators, share/OG loop, live Skins scoreboard,
+remembered groups, SEO/PWA.
+
+> **New here / AI agent?** Read [`CLAUDE.md`](CLAUDE.md) first — it's the current
+> source of truth. See [`docs/DECISIONS.md`](docs/DECISIONS.md) for the "why" and
+> [`docs/ROADMAP.md`](docs/ROADMAP.md) for what's next.
+>
+> _Note: this project pivoted away from partner-matching. `docs/SPEC.md` describes
+> that old product and is kept for history only._
 
 ## Stack
-
-- [Next.js 15](https://nextjs.org) (App Router, TypeScript)
+- [Next.js 15](https://nextjs.org) (App Router, TypeScript, React 19)
 - [Tailwind CSS v4](https://tailwindcss.com)
-- Planned: Supabase (auth + database), Mapbox (course map), Vercel (hosting)
+- [Supabase](https://supabase.com) (auth, database, realtime)
+- [Vercel](https://vercel.com) (hosting; push to `main` to deploy)
 
 ## Getting started
-
-Requires [Node.js](https://nodejs.org) 20+.
+Requires Node.js 20+.
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:3000
+npm run build      # production build (the real deploy gate)
 ```
 
-Open http://localhost:3000.
+### Environment
+Create `.env.local` (and set the same in Vercel):
 
-## One-time git setup (run on your machine)
-
-In VS Code's terminal (or any terminal) inside this folder:
-
-```bash
-git init -b main
-git add .
-git commit -m "Initial scaffold: Next.js + Tailwind, landing + game board"
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_SITE_URL=https://your-domain   # for absolute share/OG URLs
 ```
 
-Then to publish to GitHub (after creating an empty repo named `pure-it` there):
+### Database
+Run the SQL files in [`supabase/`](supabase/) once each in the Supabase SQL
+editor (see [`docs/SUPABASE_SETUP.md`](docs/SUPABASE_SETUP.md)). The live
+scoreboard needs `migration-live-games.sql` and Realtime enabled.
 
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/pure-it.git
-git push -u origin main
-```
-
-## Roadmap (MVP)
-
-1. Game board: browse/post/join rounds (mock data → Supabase)
-2. Profiles: handicap, home course, preferences
-3. Auth (email + Google via Supabase)
-4. Course search + map
-5. In-app chat after joining a game
-6. Later: handicap estimator, duo discounts, 2v2 formats, coach listings
+## Project layout
+See [`CLAUDE.md`](CLAUDE.md#repo-map) for the full map. Game math lives in
+`lib/games.ts` (pure, unit-tested); calculators are under `app/games/*`.

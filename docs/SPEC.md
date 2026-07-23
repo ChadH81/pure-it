@@ -1,5 +1,11 @@
 # Pure it! — Product Spec & Data Model (v0.1)
 
+> ⚠️ **HISTORICAL / SUPERSEDED.** This spec describes the original
+> partner-**matching** product, which was removed in the pivot to free game
+> calculators + the ASAP tracker. It's kept for history only. For the current
+> product see [`../CLAUDE.md`](../CLAUDE.md), [`DECISIONS.md`](DECISIONS.md), and
+> [`ROADMAP.md`](ROADMAP.md).
+
 _Last updated: July 8, 2026_
 
 ## 1. One-liner
