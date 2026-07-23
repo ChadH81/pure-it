@@ -6,6 +6,7 @@ import { balanceTeams, type Golfer } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
 import { ScrambleIcon } from "@/components/icons";
+import GroupBar from "@/components/GroupBar";
 
 type Row = { name: string; handicap: string };
 
@@ -93,6 +94,13 @@ export default function ScrambleCalculator() {
           + Player
         </button>
       </div>
+
+      <GroupBar
+        current={rows.map((r) => r.name)}
+        onApply={(picked) =>
+          setRows((cur) => picked.map((nm, i) => ({ name: nm, handicap: cur[i]?.handicap ?? "" })))
+        }
+      />
 
       {/* Result */}
       <div className="result-card mt-6 p-6">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { matchPlay, type Score } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
+import GroupBar from "@/components/GroupBar";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -83,6 +84,14 @@ export default function MatchPlayCalculator() {
           <input className="field" value={nameB} onChange={(e) => setNameB(e.target.value)} />
         </Labeled>
       </div>
+
+      <GroupBar
+        current={[nameA, nameB]}
+        onApply={(picked) => {
+          if (picked[0]) setNameA(picked[0]);
+          if (picked[1]) setNameB(picked[1]);
+        }}
+      />
 
       <div className="result-card mt-6 p-6">
         <div className="flex items-start justify-between gap-3">

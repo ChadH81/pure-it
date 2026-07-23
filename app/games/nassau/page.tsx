@@ -5,6 +5,7 @@ import Link from "next/link";
 import { nassau, type Score, type NassauSegment } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
+import GroupBar from "@/components/GroupBar";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -93,6 +94,14 @@ export default function NassauCalculator() {
           />
         </Labeled>
       </div>
+
+      <GroupBar
+        current={[nameA, nameB]}
+        onApply={(picked) => {
+          if (picked[0]) setNameA(picked[0]);
+          if (picked[1]) setNameB(picked[1]);
+        }}
+      />
 
       {/* Result */}
       <div className="result-card mt-6 p-6">

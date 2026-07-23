@@ -6,6 +6,7 @@ import { wolf, wolfOnHole, type WolfHole } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { WolfIcon } from "@/components/icons";
 import { shareUrl } from "@/lib/share";
+import GroupBar from "@/components/GroupBar";
 
 const HOLES = 18;
 const N = 4;
@@ -113,6 +114,11 @@ export default function WolfCalculator() {
           </button>
         </div>
       </div>
+
+      <GroupBar
+        current={names}
+        onApply={(picked) => setNames((cur) => cur.map((n, i) => picked[i] ?? n))}
+      />
 
       {/* Result */}
       <div className="result-card mt-6 p-6">

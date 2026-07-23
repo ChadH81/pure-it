@@ -5,6 +5,7 @@ import Link from "next/link";
 import { vegas, type Score } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
+import GroupBar from "@/components/GroupBar";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -111,6 +112,11 @@ export default function VegasCalculator() {
           Clear scores
         </button>
       </div>
+
+      <GroupBar
+        current={names}
+        onApply={(picked) => setNames((cur) => cur.map((n, i) => picked[i] ?? n))}
+      />
 
       {/* Result */}
       <div className="result-card mt-6 p-6">

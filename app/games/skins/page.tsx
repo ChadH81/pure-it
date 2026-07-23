@@ -5,6 +5,7 @@ import Link from "next/link";
 import { skins, type Score } from "@/lib/games";
 import ShareButton from "@/components/ShareButton";
 import { shareUrl } from "@/lib/share";
+import GroupBar from "@/components/GroupBar";
 
 const HOLES = 18;
 const emptyCard = (): Score[] => Array(HOLES).fill(null);
@@ -125,6 +126,15 @@ export default function SkinsCalculator() {
           </button>
         </div>
       </div>
+
+      <GroupBar
+        current={players.map((p) => p.name)}
+        onApply={(picked) =>
+          setPlayers((cur) =>
+            picked.map((nm, i) => ({ name: nm, scores: cur[i]?.scores ?? emptyCard() }))
+          )
+        }
+      />
 
       {/* Result */}
       <div className="result-card mt-6 p-6">
